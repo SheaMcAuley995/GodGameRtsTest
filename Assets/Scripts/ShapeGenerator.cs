@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class ShapeGenerator : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    ShapeSettings settings;
+
+    public ShapeGenerator(ShapeSettings settings)
+    {
+        this.settings = settings;
+    }
+
+    public Vector3 CalculatePointOnPlanet(Vector3 pointOnUnitSphere)
+    {
+        return pointOnUnitSphere * settings.planetRadius;
+    }
 }
