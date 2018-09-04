@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MySelectable : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerClickHandler
 {
+    public enum Deselect { Lctrl, Rctrl}
+
 
     public static HashSet<MySelectable> allMySelectables = new HashSet<MySelectable>();
     public static HashSet<MySelectable> currentlySelected = new HashSet<MySelectable>();
@@ -18,16 +20,23 @@ public class MySelectable : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
 
     void Awake()
     {
+
         allMySelectables.Add(this);
+        myRenderer = GetComponent<Renderer>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (!Input.GetKey(KeyCode.LeftControl) && !Input.GetKey(KeyCode.RightControl))
+        {
+            DeselectAll(eventData);
+        }
+        
         OnSelect(eventData);
     }
     public void OnSelect(BaseEventData eventData)
     {
-        DeselectAll(eventData);
+
         currentlySelected.Add(this);
         myRenderer.material = selectedMaterial;
     }
@@ -47,4 +56,3 @@ public class MySelectable : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     }
 
 }
-

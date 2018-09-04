@@ -33,9 +33,6 @@ public class CameraController : MonoBehaviour {
         targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
         targetPos.z = Mathf.Clamp(targetPos.z, -panLimit.y, panLimit.y);
 
-
-
-
         transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPos.x, Time.deltaTime * panSpeed), Mathf.Lerp(transform.position.y, targetPos.y, Time.deltaTime * correctionSpeed), Mathf.Lerp(transform.position.z, targetPos.z, Time.deltaTime * panSpeed));
 	}
 
