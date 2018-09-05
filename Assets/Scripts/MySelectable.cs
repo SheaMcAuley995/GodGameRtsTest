@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class MySelectable : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerClickHandler
 {
-    public enum Deselect { Lctrl, Rctrl}
 
 
     public static HashSet<MySelectable> allMySelectables = new HashSet<MySelectable>();
