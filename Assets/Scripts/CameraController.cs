@@ -4,31 +4,47 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
+
+    public Vector3 targetPos;
     public float panSpeed = 20f;
+    public float correctionSpeed = 0.2f;
     public float panBorderThickness = 10f;
+    public Vector2 panLimit;
+    public float scrollSpeed = 20f;
+    public float minY = 20f;
+    public float maxY = 140f;
 
-	// Update is called once per frame
-	void Update () {
+    public LayerMask collisionLayer;
 
-        Vector3 pos = transform.position;
+    private void Update()
+    {
+        groundCorrection();
+    }
+    // Update is called once per frame
+    void LateUpdate () {
 
-		if(Input.GetKey(KeyCode.W) || Input.mousePosition.y >= Screen.height - panBorderThickness)
-        {
-            pos.z += panSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S) || Input.mousePosition.y <= panBorderThickness)
-        {
-            pos.z -= panSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.D) || Input.mousePosition.x >= Screen.width - panBorderThickness)
-        {
-            pos.x += panSpeed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.A) || Input.mousePosition.x <= panBorderThickness)
-        {
-            pos.x -= panSpeed * Time.deltaTime;
-        }
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        targetPos.y -= scroll * scrollSpeed * 100f * Time.deltaTime;
 
-        transform.position = pos;
+        targetPos.z += Input.GetAxisRaw("Vertical") * panSpeed * Time.deltaTime;
+        targetPos.x += Input.GetAxisRaw("Horizontal") * panSpeed * Time.deltaTime;
+
+        targetPos.x = Mathf.Clamp(targetPos.x, -panLimit.x, panLimit.x);
+        targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
+        targetPos.z = Mathf.Clamp(targetPos.z, -panLimit.y, panLimit.y);
+
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPos.x, Time.deltaTime * panSpeed), Mathf.Lerp(transform.position.y, targetPos.y, Time.deltaTime * correctionSpeed), Mathf.Lerp(transform.position.z, targetPos.z, Time.deltaTime * panSpeed));
 	}
+
+
+
+    private void groundCorrection()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, -transform.up,out hit, minY - 5))
+        {
+            targetPos.y = minY + hit.point.y;
+            Debug.Log(targetPos.y);
+        }
+    }
 }
