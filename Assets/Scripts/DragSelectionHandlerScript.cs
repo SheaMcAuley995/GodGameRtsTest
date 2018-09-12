@@ -30,9 +30,9 @@ public class DragSelectionHandlerScript : MonoBehaviour, IBeginDragHandler, IDra
 
     public void OnDrag(PointerEventData eventData)
     {
-        foreach(GameObject in )
-        mySelect([])
-        Camera.main.ScreenToWorldPoint()
+        //foreach(GameObject in )
+        //mySelect([])
+      //  Camera.main.ScreenToWorldPoint()
 
         if(eventData.position.x < startPos.x)
         {

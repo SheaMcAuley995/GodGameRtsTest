@@ -6,6 +6,7 @@ public class GrassRenderer : MonoBehaviour {
 
     public Mesh grassMesh;
     public Material material;
+    public LayerMask canGrowLayer;
 
     public int seed;
     public Vector2 size;
@@ -13,8 +14,8 @@ public class GrassRenderer : MonoBehaviour {
     public int grassNum;
     public float startHeight = 1000;
 
-	// Use this for initialization
-	void Update () {
+    // Use this for initialization
+    void Update () {
         Random.InitState(seed);
         List<Matrix4x4> matrices = new List<Matrix4x4>(grassNum);
         for(int i = 0; i < grassNum; ++i)
@@ -25,7 +26,7 @@ public class GrassRenderer : MonoBehaviour {
             origin.z += size.y * Random.Range(-0.5f, 0.5f);
             Ray ray = new Ray(origin, Vector3.down);
             RaycastHit hit; 
-            if(Physics.Raycast(ray,out hit))
+            if(Physics.Raycast(ray,out hit,Mathf.Infinity,canGrowLayer,QueryTriggerInteraction.Collide))
             {
                 origin = new Vector3(hit.point.x,hit.point.y + 0.5f, hit.point.z);
                 matrices.Add(Matrix4x4.TRS(origin, Quaternion.identity, Vector3.one));
@@ -33,5 +34,9 @@ public class GrassRenderer : MonoBehaviour {
             
         }
         Graphics.DrawMeshInstanced(grassMesh, 0, material, matrices);
+
+
+
+  
 	}
 }
