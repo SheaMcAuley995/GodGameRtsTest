@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour {
     public float minY = 20f;
     public float maxY = 140f;
 
+
     public LayerMask collisionLayer;
 
     private void Update()
@@ -41,7 +42,7 @@ public class CameraController : MonoBehaviour {
     private void groundCorrection()
     {
         RaycastHit hit;
-        if(Physics.Raycast(transform.position, -transform.up,out hit, minY - 5))
+        if(Physics.Raycast(transform.position, -transform.up,out hit, minY - 5,collisionLayer,QueryTriggerInteraction.Collide))
         {
             targetPos.y = minY + hit.point.y;
             Debug.Log(targetPos.y);
