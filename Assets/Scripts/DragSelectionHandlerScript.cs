@@ -7,6 +7,9 @@ using UnityEngine.EventSystems;
 
 public class DragSelectionHandlerScript : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
+    public delegate void MySelect(GameObject[] selectedUnits);
+    MySelect mySelect;
+
     [SerializeField]
     Image selectionBoxImage;
 
@@ -27,6 +30,10 @@ public class DragSelectionHandlerScript : MonoBehaviour, IBeginDragHandler, IDra
 
     public void OnDrag(PointerEventData eventData)
     {
+        //foreach(GameObject in )
+        //mySelect([])
+      //  Camera.main.ScreenToWorldPoint()
+
         if(eventData.position.x < startPos.x)
         {
             selectionRect.xMin = eventData.position.x;
