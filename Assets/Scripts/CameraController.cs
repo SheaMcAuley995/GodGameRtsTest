@@ -14,7 +14,6 @@ public class CameraController : MonoBehaviour {
     public float minY = 20f;
     public float maxY = 140f;
 
-
     public LayerMask collisionLayer;
 
     private void Update()
@@ -22,7 +21,10 @@ public class CameraController : MonoBehaviour {
         groundCorrection();
     }
     // Update is called once per frame
-    void LateUpdate () {
+    void FixedUpdate () {
+
+
+
 
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         targetPos.y -= scroll * scrollSpeed * 100f * Time.deltaTime;
@@ -46,6 +48,17 @@ public class CameraController : MonoBehaviour {
         {
             targetPos.y = minY + hit.point.y;
             Debug.Log(targetPos.y);
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                transform.eulerAngles = new Vector2(transform.eulerAngles.x, transform.eulerAngles.y + 2);
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                transform.eulerAngles = new Vector2(transform.eulerAngles.x, transform.eulerAngles.y - 2);
+            }
         }
     }
 }

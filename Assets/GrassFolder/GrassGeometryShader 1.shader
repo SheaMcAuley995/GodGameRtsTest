@@ -5,6 +5,8 @@ Shader "Custom/GrassGeometryShader" {
 Properties{
 		[HDR]_BackgroundColor("Background Color", Color) = (1,0,0,1)
 		[HDR]_ForegroundColor("Foreground Color", Color) = (0,0,1,1)
+		_Color("Color", Color) = (0,0,0,0)
+		_Brightness("Brightness", Range(0,3)) = 1
 		_MainTex("Albedo (RGB)", 2D) = "white" {}
 		_Glossiness("Smoothness", Range(0,1)) = 0.5
 		_Metallic("Metallic", Range(0,1)) = 0.0
@@ -13,6 +15,7 @@ Properties{
 		_GrassWidth("Grass Width", Float) = 0.25
 		_WindSpeed("Wind Speed", Float) = 100
 		_WindStength("Wind Strength", Float) = 0.05
+		
 	}
 		SubShader{
 		Tags{ "Queue" = "AlphaTest" "IgnoreProjector" = "True" "RenderType" = "TransparentCutout" }
@@ -56,6 +59,8 @@ Properties{
 	half _Metallic;
 	fixed4 _BackgroundColor;
 	fixed4 _ForegroundColor;
+	fixed4 _Color;
+	half _Brightness;
 	half _GrassHeight;
 	half _GrassWidth;
 	half _Cutoff;
@@ -253,7 +258,9 @@ Properties{
 
 	half4 frag(g2f IN) : COLOR
 	{
-		fixed4 c = tex2D(_MainTex, IN.uv);
+		//_Color = 
+		//_Color = (1 * _Brightness, 1 * _Brightness, 1 * _Brightness, 1 * _Brightness);
+		fixed4 c = tex2D(_MainTex, IN.uv) * (_Color * _Brightness);
 		clip(c.a - _Cutoff);
 		return c;// float4(IN.diffuseColor.rgb, 1.0);
 	}

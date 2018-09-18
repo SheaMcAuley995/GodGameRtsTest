@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class GrassPointCloudRenderer : MonoBehaviour {
     //public Mesh grassMesh;
     //public Material material;
