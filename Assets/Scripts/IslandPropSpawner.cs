@@ -35,6 +35,7 @@ public class IslandPropSpawner : MonoBehaviour {
             //newPos.y += (newProp.GetComponent<BoxCollider>().size.y * 0.5f);
             //newProp.transform.position = newPos;
             newProp.transform.position = new Vector3 (newProp.transform.position.x, newProp.transform.position.y + (newProp.GetComponent<BoxCollider>().size.y * 0.5f), newProp.transform.position.z);
+            newProp.transform.eulerAngles = new Vector3(0, 0, -90);
             Debug.DrawLine(transform.position, Vector3.down * (area.y * 0.5f));
         }
         
