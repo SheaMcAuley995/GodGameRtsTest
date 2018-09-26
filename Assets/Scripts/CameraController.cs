@@ -16,6 +16,7 @@ public class CameraController : MonoBehaviour {
     public float minY = 20f;
     public float maxY = 140f;
     private float zoomPos = 0;
+    public Vector3 target;
 
     public LayerMask collisionLayer;
 
@@ -47,28 +48,35 @@ public class CameraController : MonoBehaviour {
     private void Move()
     {
 
-        Vector3 desiredMove = new Vector3(KeyboardInput.x, 0, KeyboardInput.y);
+        if (Input.GetKey(KeyCode.Space))
+        {
+            transform.Translate(target);
+        }
+        else
+        {
+            Vector3 desiredMove = new Vector3(KeyboardInput.x, 0, KeyboardInput.y);
+            desiredMove *= panSpeed;
+            desiredMove *= Time.deltaTime;
+            desiredMove = Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y, 0f)) * desiredMove;
+            desiredMove = transform.InverseTransformDirection(desiredMove);
 
-        desiredMove *= panSpeed;
-        desiredMove *= Time.deltaTime;
-        desiredMove = Quaternion.Euler(new Vector3(0f, transform.eulerAngles.y, 0f)) * desiredMove;
-        desiredMove = transform.InverseTransformDirection(desiredMove);
+            transform.Translate(desiredMove, Space.Self);
+        }
 
-        transform.Translate(desiredMove, Space.Self);
     }
 
 
     private void HeightCalculation()
     {
 
-        float ScrollWheel = Input.GetAxis("Mouse ScrollWheel");
+        float ScrollWheel = -Input.GetAxis("Mouse ScrollWheel");
 
 
         float distanceToGround = DistanceToGround();
         zoomPos += ScrollWheel * Time.deltaTime * scrollSpeed;
 
             zoomPos = Mathf.Clamp01(zoomPos);
-            minY = distanceToGround + minY;
+            //minY = distanceToGround + minY;
             float targetHeight = Mathf.Lerp(minY, maxY, zoomPos);
             float difference = 0;
 
@@ -134,8 +142,18 @@ public class CameraController : MonoBehaviour {
         Ray ray = new Ray(transform.position, Vector3.down);
         RaycastHit hit;
         if (Physics.Raycast(transform.position, -transform.up, out hit, minY - 5, collisionLayer, QueryTriggerInteraction.Collide))
-            return (hit.point - transform.position).magnitude;
+        {
+            Debug.Log((hit.point - transform.position));
+         //   minY = hit.point.y + minY;
+            return (hit.point - transform.position).y;
+        }
+        else
+        {
+         //   minY = 20;
+            return 0f;
+        }
+            
 
-        return 0f;
+
     }
 }

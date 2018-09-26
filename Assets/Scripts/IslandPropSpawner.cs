@@ -16,7 +16,7 @@ public class IslandPropSpawner : MonoBehaviour {
         for(int i = 0; i < objectDensity; ++i)
         {
             spawnObject();
-            Debug.Log(i);
+            //Debug.Log(i);
         }
 
 	}
@@ -27,16 +27,17 @@ public class IslandPropSpawner : MonoBehaviour {
 
         Ray ray = new Ray(pos, Vector3.down);
         RaycastHit hit;
-
         if(Physics.Raycast(ray, out hit,area.y*0.5f,spawnLayer,QueryTriggerInteraction.Collide))
         {
-            GameObject newProp = Instantiate(objects[Random.Range(0, objects.Count)], new Vector3 (hit.point.x,hit.point.y,hit.point.z), Quaternion.identity);
-           // Vector3 newPos = newProp.transform.position;
-            //newPos.y += (newProp.GetComponent<BoxCollider>().size.y * 0.5f);
-            //newProp.transform.position = newPos;
-            newProp.transform.position = new Vector3 (newProp.transform.position.x, newProp.transform.position.y + (newProp.GetComponent<BoxCollider>().size.y * 0.5f), newProp.transform.position.z);
-            newProp.transform.eulerAngles = new Vector3(0, 0, -90);
-            Debug.DrawLine(transform.position, Vector3.down * (area.y * 0.5f));
+                GameObject newProp = Instantiate(objects[Random.Range(0, objects.Count)], new Vector3(hit.point.x, hit.point.y, hit.point.z), Quaternion.identity);
+                // Vector3 newPos = newProp.transform.position;
+                //newPos.y += (newProp.GetComponent<BoxCollider>().size.y * 0.5f);
+                //newProp.transform.position = newPos;
+                newProp.transform.position = new Vector3(newProp.transform.position.x, newProp.transform.position.y + (newProp.GetComponent<BoxCollider>().size.y * 0.5f), newProp.transform.position.z);
+                newProp.transform.eulerAngles = new Vector3(0 + Random.Range(-15, 15), 0 + Random.Range(-150, 150), -90 + Random.Range(-15,15));
+            newProp.transform.localScale += new Vector3(Random.Range(-30f, 0f), Random.Range(-30f, 0f), Random.Range(-30f, 0f));
+
+          //  Debug.DrawLine(transform.position, Vector3.down * (area.y * 0.5f));
         }
         
     }

@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33710470861635458}
   - component: {fileID: 23006736965167414}
   - component: {fileID: 65003878006007586}
+  - component: {fileID: 208154075513895774}
+  - component: {fileID: 114723336494677178}
   m_Layer: 0
   m_Name: SpawnProp_Tree
   m_TagString: Untagged
@@ -36,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1293744918161848}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -132.72624, y: 16.630514, z: 101.92852}
+  m_LocalPosition: {x: 11.843765, y: 43.75727, z: 121.22439}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,5 +96,35 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.12903784, y: 0.078552015, z: 0.092204146}
-  m_Center: {x: -0.06451892, y: 0.012072643, z: -0.015488964}
+  m_Size: {x: 0.1, y: 0.03, z: 0.03}
+  m_Center: {x: -0.06, y: 0, z: -0.01}
+--- !u!114 &114723336494677178
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1293744918161848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34ac0607143c7ec49a323fb366929c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3
+  interactionTransform: {fileID: 4799889643036690}
+  interactType: 0
+  resource: 0
+--- !u!208 &208154075513895774
+NavMeshObstacle:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1293744918161848}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.065, y: 0.01, z: 0.01}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
